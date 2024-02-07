@@ -2,18 +2,15 @@
 
 PRINT_INPUT=false
 PRINT_OUTPUT=false
-SHOW_NUMBERS=true
+SHOW_NUMBERS=false
 
-CHECKER_PATH=/home/tlenovo/tools/pushswap_checker
-PUSHSWAP_PATH=/home/tlenovo/projects/study/42_push_swap/push_swap
+CHECKER_PATH=""
+PUSHSWAP_PATH="./push_swap"
 
-
-# FILEPATH: /home/tlenovo/projects/study/42_push_swap/test.sh
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
-
 
 echo "\n${BLUE}PARSING TESTS${NC}\n"
 
@@ -31,11 +28,6 @@ for file in ./tests/*testerror*; do
 		*Error*) printf "%30s : ${GREEN}OK${NC}\n" $file;; 
 		*) 	printf "%30s : ${RED}KO${NC}\n" $file;; 
 	esac
-	# if [ -z "${$result##*Error*}"]; then
-	# 	echo "$file:\t ${GREEN}OK${NC}"
-	# else
-	# 	echo "$file:\t ${RED}KO${NC}"
-	# fi 
 done
 
 echo "\n${BLUE}IDENTITY TESTS${NC}\n"
@@ -55,22 +47,13 @@ for file in ./tests/*testiden*; do
 	else
 		printf "%30s : ${RED}KO${NC}\n" $file
 	fi
-	
-	# if [ -z "${$result##*Error*}"]; then
-	# 	echo "$file:\t ${GREEN}OK${NC}"
-	# else
-	# 	echo "$file:\t ${RED}KO${NC}"
-	# fi 
 done
 
 echo "\n${BLUE}MAIN TESTS${NC}\n"
 
-# Loop through all files in the ./tests folder that contain the word "test"
 for file in ./tests/*test_*; do
-	# Extract the numbers from the file
 	numbers=$(cat "$file")
 
-	# Execute the program "pushswap" with the numbers as arguments
 	result=$($PUSHSWAP_PATH $numbers)
 	
 	count_of_operations=$(echo $result |  tr ' ' '\n' | wc -l)
