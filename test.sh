@@ -12,11 +12,14 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-echo "\n${BLUE}PARSING TESTS${NC}\n"
+echo "\n${BLUE}\t\tERROR TESTS${NC}\n"
+
+echo "### Errors should be printed into ${RED}standart error${NC} fd ###\n"
 
 for file in ./tests/*testerror*; do
 	numbers=$(cat "$file")
-	result=$($PUSHSWAP_PATH $numbers)
+	result=$($PUSHSWAP_PATH $numbers 2>&1)
+	
 	if [ $PRINT_INPUT = true ]; then
 		echo "Input\t: $(echo "$numbers" | tr '\n' ' ')"
 	fi
@@ -30,11 +33,12 @@ for file in ./tests/*testerror*; do
 	esac
 done
 
-echo "\n${BLUE}IDENTITY TESTS${NC}\n"
+echo "\n${BLUE}\t\tIDENTITY TESTS${NC}\n"
 
 for file in ./tests/*testiden*; do
 	numbers=$(cat "$file")
 	result=$($PUSHSWAP_PATH $numbers | wc -m)
+
 	if [ $PRINT_INPUT = true ]; then
 		echo "Input\t: $(echo "$numbers" | tr '\n' ' ')"
 	fi
@@ -49,7 +53,7 @@ for file in ./tests/*testiden*; do
 	fi
 done
 
-echo "\n${BLUE}MAIN TESTS${NC}\n"
+echo "\n${BLUE}\t\tMAIN TESTS${NC}\n"
 
 for file in ./tests/*test_*; do
 	numbers=$(cat "$file")
